@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="favicon" href="favicon.ico">
+    <title>file thumbnail</title>
+</head>
+<body>
+    <div class="component">
+        <h3>이미지 업로드</h3>
+        <input type="file" name="imageUpload" id="imageUpload" onchange="imageFileInput()">
+        <div id="imageDiv"></div>
+        <br><hr>
+    </div>
+
+<script>
+    const imageFileInput = () => {
+        const selectedImageFile = imageUpload.files[0];
+        console.log(selectedImageFile);
+    };
+</script>
+
+</body>
+</html>
