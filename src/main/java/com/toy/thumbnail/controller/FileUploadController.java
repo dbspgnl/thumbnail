@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +22,16 @@ public class FileUploadController {
 	FileUploadService fileUploadService;
 	
 	@GetMapping(value="/list")
-	public ModelAndView hello() {
-		ModelAndView mav = new ModelAndView("index");
-		return mav;
+	public ModelAndView list() {
+		ModelAndView mv = new ModelAndView("index");
+		return mv;
+    }
+
+	@GetMapping(value="/download/{fileName}")
+	public ResponseEntity<?> download(
+		@PathVariable("fileName") String fileName
+	) {
+		return fileUploadService.download(fileName);
     }
 
 	@PostMapping(value="/upload/normal")
