@@ -7,7 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileUploadService {
 
 	public Object imageUploadImage(MultipartFile file) {
-		return file;
+		System.out.println(file.getOriginalFilename());
+		return file.getOriginalFilename();
 	}
 	
 }
