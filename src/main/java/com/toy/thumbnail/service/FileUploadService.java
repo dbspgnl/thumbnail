@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
@@ -16,19 +17,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.toy.thumbnail.utils.PDFConvertor;
+
 @Service
 public class FileUploadService {
 
-	public String imageUploadImage(MultipartFile file) {
-		try {
-			Path path = Paths.get("d:","data", file.getOriginalFilename());
-			file.transferTo(new File(path.toString()));
-			return "/api/file/download/"+file.getOriginalFilename();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	@Autowired
+	PDFConvertor pdfConvertor;
 
 	public ResponseEntity<?> download(String fileName) {
 		try {
@@ -47,6 +42,31 @@ public class FileUploadService {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public String uploadImage(MultipartFile file) {
+		try {
+			Path path = Paths.get("d:","data", file.getOriginalFilename());
+			file.transferTo(new File(path.toString()));
+			return "/api/file/download/"+file.getOriginalFilename();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public String uploadPdf(MultipartFile file) {
+		try {
+			// Path path = Paths.get("d:","data", file.getOriginalFilename());
+			// File fi = new File(path.toString());
+			// System.out.println(fi.getName().split(".pdf")[0]);
+			// file.transferTo(fi);
+			pdfConvertor.conversionPdf2Img(file);
+			return "/api/file/download/"+file.getOriginalFilename().split(".pdf")[0]+".png";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }

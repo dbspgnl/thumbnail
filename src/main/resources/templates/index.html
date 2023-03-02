@@ -20,20 +20,27 @@
     </div>
     <div class="component">
         <h3>이미지 업로드</h3>
-        <input type="file" id="File" name="files" multiple="multiple"/>
-        <button id="Button">전송</button>
+        <input type="file" id="imageFileInput" name="files" multiple="multiple"/>
+        <button id="imageButton">전송</button>
         <div id="imageDiv"></div>
+        <br><hr>
+    </div>
+    <div class="component">
+        <h3>PDF 업로드</h3>
+        <input type="file" id="pdfFileInput" name="files" multiple="multiple"/>
+        <button id="pdfButton">전송</button>
+        <div id="pdfDiv"></div>
         <br><hr>
     </div>
 
 <script>
-    const ButtonElement = document.querySelector('#Button');
-    const FileElement = document.querySelector('#File');
-
-    const getData = async () => {
+    // ----------------------------------------------------------------
+    const ImageButtonElement = document.querySelector('#imageButton');
+    const ImageFileElement = document.querySelector('#imageFileInput');
+    const imageGetData = async () => {
         try{
             const formData = new FormData();
-            formData.append("file", FileElement.files[0]);
+            formData.append("file", ImageFileElement.files[0]);
             const url = '/api/file/upload/image';
             const response = await axios.post(url, formData);
             console.log(response)
@@ -46,7 +53,29 @@
             console.error(error);
         }
     }
-    ButtonElement.addEventListener('click', getData);
+    ImageButtonElement.addEventListener('click', imageGetData);
+    // ----------------------------------------------------------------
+    const PdfButtonElement = document.querySelector('#pdfButton');
+    const PdfFileElement = document.querySelector('#pdfFileInput');
+    const pdfGetData = async () => {
+        try{
+            const formData = new FormData();
+            formData.append("file", PdfFileElement.files[0]);
+            const url = '/api/file/upload/pdf';
+            const response = await axios.post(url, formData);
+            console.log(response)
+            const div = document.querySelector("#pdfDiv");
+            const img = document.createElement("img");
+            img.src = response.data;
+            div.appendChild(img);
+        }
+        catch (error){
+            console.error(error);
+        }
+    }
+    PdfButtonElement.addEventListener('click', pdfGetData);
+    // ----------------------------------------------------------------
+
 </script>
 </body>
 </html>

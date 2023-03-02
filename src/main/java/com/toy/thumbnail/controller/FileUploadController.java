@@ -50,7 +50,18 @@ public class FileUploadController {
 		@RequestBody MultipartFile file
 	) {
 		try {
-			return new ResponseEntity<>(fileUploadService.imageUploadImage(file), HttpStatus.OK);
+			return new ResponseEntity<>(fileUploadService.uploadImage(file), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("서버 작업 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+    }
+
+	@PostMapping(value="/upload/pdf")
+	public ResponseEntity<?> uploadPdf(
+		@RequestBody MultipartFile file
+	) {
+		try {
+			return new ResponseEntity<>(fileUploadService.uploadPdf(file), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("서버 작업 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
