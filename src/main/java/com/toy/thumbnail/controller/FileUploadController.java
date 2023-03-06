@@ -66,5 +66,16 @@ public class FileUploadController {
 			return new ResponseEntity<>("서버 작업 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     }
+	
+	@PostMapping(value="/upload/mp4")
+	public ResponseEntity<?> uploadMp4(
+		@RequestBody MultipartFile file
+	) {
+		try {
+			return new ResponseEntity<>(fileUploadService.uploadMp4(file), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("서버 작업 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+    }
 
 }

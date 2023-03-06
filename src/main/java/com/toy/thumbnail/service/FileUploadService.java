@@ -18,12 +18,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.toy.thumbnail.utils.PDFConvertor;
+import com.toy.thumbnail.utils.VideoConvertor;
 
 @Service
 public class FileUploadService {
 
 	@Autowired
 	PDFConvertor pdfConvertor;
+	@Autowired
+	VideoConvertor videoConvertor;
 
 	public ResponseEntity<?> download(String fileName) {
 		try {
@@ -57,12 +60,21 @@ public class FileUploadService {
 
 	public String uploadPdf(MultipartFile file) {
 		try {
-			// Path path = Paths.get("d:","data", file.getOriginalFilename());
-			// File fi = new File(path.toString());
-			// System.out.println(fi.getName().split(".pdf")[0]);
-			// file.transferTo(fi);
 			pdfConvertor.conversionPdf2Img(file);
 			return "/api/file/download/"+file.getOriginalFilename().split(".pdf")[0]+".png";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Object uploadMp4(MultipartFile file) {
+		try {
+			Path path = Paths.get("d:","data", file.getOriginalFilename());
+			File fi = new File(path.toString());
+			file.transferTo(fi);
+			videoConvertor.getThumbnail(fi);
+			return "/api/file/download/"+file.getOriginalFilename().split(".mp4")[0]+".png";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -32,6 +32,13 @@
         <div id="pdfDiv"></div>
         <br><hr>
     </div>
+    <div class="component">
+        <h3>MP4 업로드</h3>
+        <input type="file" id="mp4FileInput" name="files" multiple="multiple"/>
+        <button id="mp4Button">전송</button>
+        <div id="mp4Div"></div>
+        <br><hr>
+    </div>
 
 <script>
     // ----------------------------------------------------------------
@@ -75,7 +82,26 @@
     }
     PdfButtonElement.addEventListener('click', pdfGetData);
     // ----------------------------------------------------------------
-
+    const Mp4ButtonElement = document.querySelector('#mp4Button');
+    const Mp4FileElement = document.querySelector('#mp4FileInput');
+    const mp4GetData = async () => {
+        try{
+            const formData = new FormData();
+            formData.append("file", Mp4FileElement.files[0]);
+            const url = '/api/file/upload/mp4';
+            const response = await axios.post(url, formData);
+            console.log(response)
+            const div = document.querySelector("#mp4Div");
+            const img = document.createElement("img");
+            img.src = response.data;
+            div.appendChild(img);
+        }
+        catch (error){
+            console.error(error);
+        }
+    }
+    Mp4ButtonElement.addEventListener('click', mp4GetData);
+    // ----------------------------------------------------------------
 </script>
 </body>
 </html>
