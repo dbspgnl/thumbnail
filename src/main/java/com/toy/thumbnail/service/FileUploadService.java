@@ -60,7 +60,7 @@ public class FileUploadService {
 
 	public String uploadPdf(MultipartFile file) {
 		try {
-			pdfConvertor.conversionPdf2Img(file);
+			pdfConvertor.conversionPdf2Img(file); // 한글 및 파일명 특수문자 대응 안됨
 			return "/api/file/download/"+file.getOriginalFilename().split(".pdf")[0]+".png";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,7 +73,7 @@ public class FileUploadService {
 			Path path = Paths.get("d:","data", file.getOriginalFilename());
 			File fi = new File(path.toString());
 			file.transferTo(fi);
-			videoConvertor.getThumbnail(fi);
+			videoConvertor.getThumbnail(fi); // 한글 및 파일명 특수문자 대응 안됨
 			return "/api/file/download/"+file.getOriginalFilename().split(".mp4")[0]+".png";
 		} catch (Exception e) {
 			e.printStackTrace();
