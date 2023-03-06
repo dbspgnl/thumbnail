@@ -70,10 +70,7 @@ public class FileUploadService {
 
 	public Object uploadMp4(MultipartFile file) {
 		try {
-			Path path = Paths.get("d:","data", file.getOriginalFilename());
-			File fi = new File(path.toString());
-			file.transferTo(fi);
-			videoConvertor.getThumbnail(fi); // 한글 및 파일명 특수문자 대응 안됨
+			videoConvertor.getThumbnail(file); // 한글 및 파일명 특수문자 대응 안됨
 			return "/api/file/download/"+file.getOriginalFilename().split(".mp4")[0]+".png";
 		} catch (Exception e) {
 			e.printStackTrace();
