@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="favicon" href="favicon.ico">
+    <title>file thumbnail</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="component">
+        <h3>같은 파일 체크 업로드</h3>
+        <input type="file" id="imageFileInput" name="files" multiple="multiple" webkitdirectory/>
+        <button id="imageButton">전송</button>
+        <div id="imageDiv"></div>
+        <br><hr>
+    </div>
+<script>
+    // ----------------------------------------------------------------
+    const ButtonElement = document.querySelector('#imageButton');
+    const FileElement = document.querySelector('#imageFileInput');
+    const imageGetData = async () => {
+        try{
+            const formData = new FormData();
+            const fileElement = FileElement.files;
+            for (var i in fileElement) {
+                formData.append("file", fileElement[i]);
+                formData.append("lastModified", fileElement[i].lastModified);
+            }
+            // console.log(fi2);
+            // console.log(fi.lastModified)
+            // console.log(fi2.lastModified)
+            // formData.append("file", fi);
+            const url = '/api/test/upload/sameFileChk';
+            const response = await axios.post(url, formData);
+            console.log(response)
+            const div = document.querySelector("#imageDiv");
+            const img = document.createElement("img");
+            img.src = response.data;
+            div.appendChild(img);
+        }
+        catch (error){
+            console.error(error);
+        }
+    }
+    ButtonElement.addEventListener('click', imageGetData);
+	// ----------------------------------------------------------------
+</script>
+</body>
+</html>
