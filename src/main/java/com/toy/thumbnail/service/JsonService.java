@@ -155,5 +155,12 @@ public class JsonService {
 		}
 		return contentList;
     }
+
+	public Object modelInfoJsonGet(Map<String, Object> formData) {
+		// System.out.println(formData);
+		var modelInfo = ModelInfo.of("dx101", formData.get("json"));
+        modelInfoRepository.save(modelInfo);
+		return formData.get("json");
+	}
 	
 }

@@ -6,9 +6,53 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-	<button onclick="location.href='/api/json/model/set'">set</button><hr>
-	<button onclick="location.href='/api/json/model/get'">get</button><hr>
+	<button onclick="location.reload()">새로고침</button>
+	<button onclick="location.href='/api/json/model/set'">set</button>
+	<button id="getButton">get</button>
+	<hr>
+		<button id="sendJsonButton">Json Send</button>
+		<input type="text" name="json" id="jsonInput">
+	<hr>
+	<div id="result"></div>
+
+	<script>
+		//---------------------------------------------------------------
+		const GetButtonElement = document.querySelector('#getButton');
+		const getData = async () => {
+			try{
+				const url = '/api/json/model/get';
+				const response = await axios.get(url);
+				console.log(response)
+				const div = document.querySelector("#result");
+				div.innerText = JSON.stringify(response.data);
+			}
+			catch (error){
+				console.error(error);
+			}
+		}
+		GetButtonElement.addEventListener('click', getData);
+		//---------------------------------------------------------------
+		const SendJsonButtonElement = document.querySelector('#sendJsonButton');
+		const sendJsonData = async () => {
+			try{
+				const formData = new FormData();
+				const jsonData = document.querySelector('#jsonInput').value;
+				console.log(jsonData);
+				formData.append("json", jsonData);
+				const url = '/api/json/model/json';
+				const response = await axios.post(url, formData);
+				console.log(response)
+				const div = document.querySelector("#result");
+				div.innerText = JSON.stringify(response.data);
+			}
+			catch (error){
+				console.error(error);
+			}
+		}
+		SendJsonButtonElement.addEventListener('click', sendJsonData);
+	</script>
 </body>
 </html>
