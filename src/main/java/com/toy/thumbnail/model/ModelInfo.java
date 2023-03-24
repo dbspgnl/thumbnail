@@ -1,8 +1,6 @@
 package com.toy.thumbnail.model;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,9 +35,9 @@ public class ModelInfo {
     
     @Type(type = "json")
     @Column(name = "structure", columnDefinition = "longtext")
-    private List<Map<String, Object>> modelInfo = new ArrayList<>();
+    private Object modelInfo = new ArrayList<>();
     
-    public static ModelInfo of(String name, List<Map<String, Object>> modelInfo) {
+    public static ModelInfo of(String name, Object modelInfo) {
         return new ModelInfo(null, name, modelInfo);
     }
 	
