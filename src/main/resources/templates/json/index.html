@@ -10,10 +10,13 @@
 </head>
 <body>
 	<button onclick="location.reload()">새로고침</button>
-	<button onclick="location.href='/api/json/model/set'">set</button>
+	<div>모든 항목 값1로 설정</div>
+	<button onclick="location.href='/api/json/model/set'">default set</button>
+	<div>첫번째 값 호출</div>
 	<button id="getButton">get</button>
 	<hr>
-		<button id="sendJsonButton">Json Send</button>
+		<div>입력한 내용대로 첫번째 값을 수정</div>
+		<button id="sendJsonButton">Update</button>
 		<input type="text" name="json" id="jsonInput">
 	<hr>
 	<div id="result"></div>
@@ -42,7 +45,7 @@
 				const jsonData = document.querySelector('#jsonInput').value;
 				console.log(jsonData);
 				formData.append("json", jsonData);
-				const url = '/api/json/model/json';
+				const url = '/api/json/model/update';
 				const response = await axios.post(url, formData);
 				console.log(response)
 				const div = document.querySelector("#result");

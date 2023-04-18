@@ -81,7 +81,7 @@ public class JsonService {
     }
 
 	@Transactional
-    public Object modelInfoSave() {
+    public Object modelInfoSet() {
 		// 티어별 컨텐츠네임 리스트
 		Integer start = contentRepository.findByOrderByContentTierAsc().get(0).getContentTier();
 		Integer end = contentRepository.findByOrderByContentTierDesc().get(0).getContentTier();
@@ -156,9 +156,10 @@ public class JsonService {
 		return contentList;
     }
 
-	public Object modelInfoJsonGet(Map<String, Object> formData) {
-		// System.out.println(formData);
-		var modelInfo = ModelInfo.of("dx101", formData.get("json"));
+	public Object modelInfoUpdate(Map<String, Object> formData) {
+		System.out.println(formData);
+		ModelInfo modelInfo = modelInfoRepository.findById(1L).get();
+		modelInfo.setModelInfo(formData.get("json"));
         modelInfoRepository.save(modelInfo);
 		return formData.get("json");
 	}

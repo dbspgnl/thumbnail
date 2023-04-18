@@ -45,28 +45,31 @@ public class JsonController {
 		}
     }
 
+	// 모든 항목 값1로 설정
 	@GetMapping(value="/model/set")
-	public ModelAndView modelInfoSave() {
-		jsonService.modelInfoSave();
+	public ModelAndView modelInfoSet() {
+		jsonService.modelInfoSet();
 		ModelAndView mv = new ModelAndView("json/index");
 		return mv;
     }
 
+	// 첫번째 값 호출
 	@GetMapping(value="/model/get")
 	public ResponseEntity<?> modelInfoGet() {
 		try {
-			return new ResponseEntity<>(jsonService.modelInfoSave(), HttpStatus.OK);
+			return new ResponseEntity<>(jsonService.modelInfoGet(), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("서버 작업 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     }
 
-	@PostMapping(value="/model/json")
-	public ResponseEntity<?> modelInfoJsonGet(
+	// 입력한 내용대로 첫번째 값을 수정
+	@PostMapping(value="/model/update")
+	public ResponseEntity<?> modelInfoUpdate(
 		@RequestParam Map<String, Object> formData
 	) {
 		try {
-			return new ResponseEntity<>(jsonService.modelInfoJsonGet(formData), HttpStatus.OK);
+			return new ResponseEntity<>(jsonService.modelInfoUpdate(formData), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("서버 작업 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
