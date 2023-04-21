@@ -33,12 +33,6 @@ public class TestUploadController {
 		return mv;
     }
 
-	@GetMapping(value="/tree")
-	public ModelAndView tree() {
-		ModelAndView mv = new ModelAndView("test/tree");
-		return mv;
-    }
-
 	@PostMapping(value="/upload/sameFileChk")
 	public ResponseEntity<?> uploadImage(
 		// @RequestHeader Map<String,String> headers,

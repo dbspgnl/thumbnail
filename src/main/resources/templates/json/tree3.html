@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link href="/fancytree/css/ui.fancytree.min.css" rel="stylesheet">
+	<script src="/fancytree/js/jquery.fancytree-all-deps.min.js"></script>
+</head>
+
+<body>
+	<p>
+		<a id="button1" href="#">Toggle 'The Hobbit'</a>
+	</p>
+	<div id="tree"></div>
+	<div id="statusLine">Fancytree Demo - Click any node!</div>
+	<button id="sendTreeButton">송신</button>
+	<script src="/fancytree/modelinfo.js" type="text/javascript"></script>
+	<script>
+		$("#tree").fancytree({
+			checkbox: true, // 체크박스
+			selectMode: 2, // 단일 선택 모드
+			source: jsonData, // 데이터
+			icon: false, // 아이콘 사용안함
+
+			// lazyLoad: function (event, data) {
+			// 	data.result = { url: "https://cdn.rawgit.com/mar10/fancytree/72e03685/demo/ajax-sub2.json" };
+			// },
+
+			activate: function (event, data) {
+				$("#statusLine").text(event.type + ": " + data.node);
+			},
+
+			select: function (event, data) { // 클릭하면 동작
+				$("#statusLine").text(
+					event.type + ": " + data.node.isSelected() + " " + data.node
+				);
+			},
+		});
+
+		$("#tree").fancytree("getRootNode").visit(function(node){
+			node.setExpanded(true); // 
+			var list = [];
+			node.findFirst(function (n) {
+				if(n.data.status === 1){
+					list.push(n)
+				}
+				if(n.title === "Guidance"){
+					list.push(n.parent) // content는 항상 체크
+				}
+			});
+			for (const li of list) {
+				li.setSelected(flag=true);
+			}
+		});
+		
+		// Sample button
+		$("#button1").click(function () {
+			var tree = $.ui.fancytree.getTree(),
+				node = tree.findFirst(function (n) {
+					return n.title === "The Hobbit";
+				});
+			node.toggleSelected();
+		});
+
+	</script>
+</body>
+
+</html>

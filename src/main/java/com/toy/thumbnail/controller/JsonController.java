@@ -74,5 +74,23 @@ public class JsonController {
 			return new ResponseEntity<>("서버 작업 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     }
+
+	@GetMapping(value="/tree")
+	public ModelAndView tree() {
+		ModelAndView mv = new ModelAndView("json/tree");
+		return mv;
+    }
+
+	@GetMapping(value="/tree2")
+	public ModelAndView tree2() {
+		ModelAndView mv = new ModelAndView("json/tree2");
+		return mv;
+    }
+
+	@GetMapping(value="/tree3")
+	public ModelAndView tree3() {
+		ModelAndView mv = new ModelAndView("json/tree3");
+		return mv;
+    }
 	
 }

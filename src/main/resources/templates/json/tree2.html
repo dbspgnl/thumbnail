@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Simple Tree Picker Plugin Example</title>
+	<link rel='stylesheet' href='/json-hierarchical-tree-picker/jquery.simple-tree-picker.css'>
+	<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Inter:400,700' type='text/css'>
+	<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div class="container">
+		<div class="tree"></div>
+	</div>
+
+	<script src="http://code.jquery.com/jquery-3.6.1.slim.min.js"></script>
+	<script src="/json-hierarchical-tree-picker/jquery.simple-tree-picker.js"></script>
+	<script>
+		// Create tree object
+		var demoTreeData = JSON.parse('{"Number":"KI-125-25","Name":"All","Children":[{"Number":"WA-775-99","Name":"Main House","Children":[{"Number":"JI-105-09","Name":"Downstairs","Children":[]},{"Number":"TR-883-66","Name":"Upstairs","Children":[{"Number":"SS-002-99","Name":"Bedrooms","Children":[{"Number":"JI-656-09","Name":"Master Bedroom","Children":[]},{"Number":"ZZ-654-66","Name":"Guest Bedroom","Children":[]}]},{"Number":"SS-001-99","Name":"Other Rooms","Children":[{"Number":"JI-898-09","Name":"Great Room","Children":[]},{"Number":"ZZ-493-66","Name":"Bonus Room","Children":[]}]}]}]},{"Number":"QQ-542-10","Name":"Garage","Children":[]}]}');
+
+		// Initialize Simple Tree Picker
+		// Pass it an onclick function to update the view
+		// Pass it an initial selected state
+		$('.tree').simpleTreePicker({
+			"tree": demoTreeData,
+			"onclick": function () {
+				var selected = $(".tree").simpleTreePicker("display");
+				$("#selected").html(!!selected.length ? selected.toString().replace(/,/g, ', ') : "Nothing Selected");
+			},
+			"selected": ["ZZ-654-66", "SS-001-99"],
+			"name": "room-selection-tree"
+		});
+
+		// Update view with initial state (onclick isn't called for initial selection)
+		// $("#selected").html($(".tree").simpleTreePicker("display").toString().replace(/,/g, ', '));		
+	</script>
+</body>
+
+</html>
