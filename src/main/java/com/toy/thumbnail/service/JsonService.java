@@ -10,6 +10,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.transaction.Transactional;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -162,6 +165,18 @@ public class JsonService {
 		modelInfo.setModelInfo(formData.get("json"));
         modelInfoRepository.save(modelInfo);
 		return formData.get("json");
+	}
+
+	// @SuppressWarnings("unchecked")
+	public Object treeUpdate(Map<String, String> formData) throws ParseException {
+		String objs = formData.get("json");
+		JSONParser parser = new JSONParser();
+		JSONObject object = (JSONObject) parser.parse(objs);
+		System.out.println(object);
+		ModelInfo modelInfo = modelInfoRepository.findById(1L).get();
+		modelInfo.setModelInfo(object);
+        modelInfoRepository.save(modelInfo);
+		return object;
 	}
 	
 }

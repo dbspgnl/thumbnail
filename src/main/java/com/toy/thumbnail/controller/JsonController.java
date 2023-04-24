@@ -92,5 +92,16 @@ public class JsonController {
 		ModelAndView mv = new ModelAndView("json/tree3");
 		return mv;
     }
+
+	@PostMapping(value="/tree/update")
+	public ResponseEntity<?> treeUpdate(
+		@RequestParam Map<String, String> formData
+	) {
+		try {
+			return new ResponseEntity<>(jsonService.treeUpdate(formData), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("서버 작업 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+    }
 	
 }

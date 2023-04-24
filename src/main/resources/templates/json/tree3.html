@@ -9,6 +9,7 @@
 	<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link href="/fancytree/css/ui.fancytree.min.css" rel="stylesheet">
 	<script src="/fancytree/js/jquery.fancytree-all-deps.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -20,15 +21,12 @@
 	<button id="sendTreeButton">송신</button>
 	<script src="/fancytree/modelinfo.js" type="text/javascript"></script>
 	<script>
+		
 		$("#tree").fancytree({
 			checkbox: true, // 체크박스
 			selectMode: 2, // 단일 선택 모드
 			source: jsonData, // 데이터
 			icon: false, // 아이콘 사용안함
-
-			// lazyLoad: function (event, data) {
-			// 	data.result = { url: "https://cdn.rawgit.com/mar10/fancytree/72e03685/demo/ajax-sub2.json" };
-			// },
 
 			activate: function (event, data) {
 				$("#statusLine").text(event.type + ": " + data.node);
@@ -54,6 +52,7 @@
 			});
 			for (const li of list) {
 				li.setSelected(flag=true);
+				result = li;
 			}
 		});
 		
@@ -65,6 +64,41 @@
 				});
 			node.toggleSelected();
 		});
+
+		const GetButtonElement = document.querySelector('#sendTreeButton');
+		const getData = async () => {
+			try{
+				var tree = $.ui.fancytree.getTree("#tree");
+				var rootTree = tree.toDict(true).children[0];
+				// var data = parseModelJson(rootTree);
+				const formData = new FormData();
+				formData.append("json", JSON.stringify(rootTree));
+				const url = '/api/json/tree/update';
+				const response = await axios.post(url, formData);
+			}
+			catch (error){
+				console.error(error);
+			}
+		}
+		GetButtonElement.addEventListener('click', getData);
+		
+		// const parseModelJson = (d) => {
+		// 	var json;
+		// 	if (d.children && d.children.length != 0){
+		// 		for (const child of d.children) {
+		// 			json = {title: d.title, status: d.data.status, children: getJson(child)}
+		// 		}
+		// 	}
+		// 	console.log(">",json);
+		// 	return null;
+		// }
+
+		// const getJson = (child) => {
+		// 	var json = {title: child.title, status: child.data.status, children: child.children}
+		// 	console.log(">>>");
+		// 	console.log(child);
+		// 	return json
+		// }
 
 	</script>
 </body>
